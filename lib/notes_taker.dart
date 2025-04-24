@@ -82,6 +82,12 @@ class _NotesScreenState extends State<NotesScreen> {
     );
   }
 
+  void _deleteNote(int index) {
+    setState(() {
+      notes.removeAt(index);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,12 +113,24 @@ class _NotesScreenState extends State<NotesScreen> {
               child: ListView.builder(
                 itemCount: notes.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(notes[index]['title']!),
-                    subtitle: Text(notes[index]['content']!),
-                    trailing: IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () => _editNote(index),
+                  return Card(
+                    elevation: 2,
+                    child: ListTile(
+                      title: Text(notes[index]['title']!),
+                      subtitle: Text(notes[index]['content']!),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () => _editNote(index),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete, color: Colors.red),
+                            onPressed: () => _deleteNote(index),
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
